@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+
+<body>
+    <button onclick="send(1)">left</button>
+    <button onclick="send(0)">stop</button>
+    <button onclick="send(2)">right</button>
+    <script>
+        let url = 'ws://localhost'
+        var ws = new WebSocket(url)
+        function send(a) {
+            ws.send(JSON.stringify({ get: "data", data: a }));
+        }
+    </script>
+</body>
