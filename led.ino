@@ -20,6 +20,19 @@ void setup() {
 }
 
 void loop() {
+  if (Serial.available()) {
+    String jsonStr = Serial.readStringUntil('\n');  // 讀取串口接收到的 JSON 字串
+    jsonStr.trim();                                 // 移除字串前後的空白字符
+    StaticJsonDocument<50> doc;
+    DeserializationError error = deserializeJson(doc, jsonStr);
+
+    if (error) {
+      Serial.println("Failed to parse JSON");
+      return;
+    }
+    mode = doc["mode"];
+  }
+
   nowtime = millis();
   if (nowtime - time1 > speed) {
     time1 = nowtime;
